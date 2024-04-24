@@ -1,13 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/gestures.dart';
-import 'register_page.dart';
+// ignore_for_file: library_private_types_in_public_api
 
-class LoginPage extends StatefulWidget {
+import 'package:flutter/material.dart';
+import 'package:gestion_exercice/widgets/arrow_back_widget.dart';
+
+class RegisterPage extends StatefulWidget {
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _RegisterPageState createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
   String? _email;
   String? _password;
@@ -15,20 +16,24 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: ArrowBack(),
+        elevation: 0,
+      ),
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(32.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(
-                'Se connecter',
+              const Text(
+                'S\'inscrire',
                 style: TextStyle(
                   fontSize: 24.0,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 32.0),
+              const SizedBox(height: 32.0),
               Form(
                 key: _formKey,
                 child: Column(
@@ -51,11 +56,11 @@ class _LoginPageState extends State<LoginPage> {
                       },
                       onSaved: (value) => _email = value!,
                     ),
-                    SizedBox(height: 16.0),
+                    const SizedBox(height: 16.0),
                     TextFormField(
                       decoration: InputDecoration(
                         labelText: 'Mot de passe',
-                        fillColor: Color(0xFFF3F6FB),
+                        fillColor: const Color(0xFFF3F6FB),
                         filled: true,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(16.0),
@@ -71,44 +76,24 @@ class _LoginPageState extends State<LoginPage> {
                       },
                       onSaved: (value) => _password = value!,
                     ),
-                    SizedBox(height: 16.0),
+                    const SizedBox(height: 16.0),
                     ElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState?.validate() ?? false) {
                           _formKey.currentState?.save();
+                          // Logique pour gérer l'inscription
                         }
                       },
-                      child: Text('Se connecter',
+                      child: const Text("S'inscrire",
                           style: TextStyle(color: Colors.white)),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color(0xFFDB592A),
                         fixedSize: Size(327, 56),
                       ),
                     ),
-                    SizedBox(height: 20.0),
+                    const SizedBox(height: 20.0),
                     RichText(
-                      text: TextSpan(
-                        text: "Vous n'avez pas de compte ? ",
-                        style: TextStyle(color: Color(0xFF9C9BC2)),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: "S'inscrire",
-                            style: TextStyle(color: Color(0xFFFC6630)),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => RegisterPage()),
-                                );
-                              },
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 20.0),
-                    RichText(
-                      text: TextSpan(
+                      text: const TextSpan(
                         style: TextStyle(fontSize: 40.0),
                         children: <TextSpan>[
                           TextSpan(

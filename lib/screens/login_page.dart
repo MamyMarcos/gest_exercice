@@ -1,0 +1,134 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart'; // Import nécessaire pour TapGestureRecognizer
+
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final _formKey = GlobalKey<FormState>();
+  String? _email; // Declare as nullable
+  String? _password; // Declare as nullable
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(32.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                'Se connecter',
+                style: TextStyle(
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 32.0),
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: <Widget>[
+                    TextFormField(
+                      decoration: InputDecoration(
+                        labelText: 'Adresse e-mail',
+                        fillColor: Color(0xFFF3F6FB), // Couleur de fond
+                        filled: true, // Activez le remplissage de couleur
+                        border: OutlineInputBorder(
+                          borderRadius:
+                              BorderRadius.circular(16.0), // Bordure arrondie
+                          borderSide: BorderSide.none, // Pas de bordure visible
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value?.isEmpty ?? true) {
+                          return 'Veuillez saisir une adresse e-mail';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) => _email = value!,
+                    ),
+                    SizedBox(height: 16.0),
+                    TextFormField(
+                      decoration: InputDecoration(
+                        labelText: 'Mot de passe',
+                        fillColor: Color(0xFFF3F6FB), // Couleur de fond
+                        filled: true,
+                        border: OutlineInputBorder(
+                          borderRadius:
+                              BorderRadius.circular(16.0), // Bordure arrondie
+                          borderSide: BorderSide.none, // Pas de bordure visible
+                        ),
+                      ),
+                      obscureText: true,
+                      validator: (value) {
+                        if (value?.isEmpty ?? true) {
+                          return 'Veuillez saisir un mot de passe';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) => _password = value!,
+                    ),
+                    SizedBox(height: 16.0),
+                    ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState?.validate() ?? false) {
+                          _formKey.currentState?.save();
+                          // TODO: se connecter à l'API et naviguer vers la page suivante
+                        }
+                      },
+                      child: Text(
+                        'Se connecter',
+                        style: TextStyle(color: Colors.white), // Text color
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFFDB592A), // Background color
+                        fixedSize: Size(327, 56), // Fixed size
+                      ),
+                    ),
+                    SizedBox(height: 20.0),
+                    RichText(
+                      text: TextSpan(
+                        text: "Vous n'avez pas de compte ? ",
+                        style: TextStyle(color: Color(0xFF9C9BC2)),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: "S'inscrire",
+                            style: TextStyle(color: Color(0xFFFC6630)),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                // Ajouter la navigation vers la page d'inscription
+                              },
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 20.0),
+                    RichText(
+                      text: TextSpan(
+                        style: TextStyle(fontSize: 40.0),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: "Gym",
+                            style: TextStyle(color: Colors.black),
+                          ),
+                          TextSpan(
+                            text: "Hub",
+                            style: TextStyle(color: Color(0xFFFC6630)),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

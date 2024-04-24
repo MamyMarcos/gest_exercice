@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/gestures.dart';
-import 'register_page.dart';
+import 'package:gestion_exercice/widgets/arrow_back_widget.dart';
 
-class LoginPage extends StatefulWidget {
+class RegisterPage extends StatefulWidget {
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _RegisterPageState createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
-  String? _email;
-  String? _password;
+  String? _email; // Déclaré comme nullable
+  String? _password; // Déclaré comme nullable
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: ArrowBack(), // Ajoutez le widget ArrowBack ici
+        elevation: 0,
+      ),
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(32.0),
@@ -22,7 +25,7 @@ class _LoginPageState extends State<LoginPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                'Se connecter',
+                'S\'inscrire',
                 style: TextStyle(
                   fontSize: 24.0,
                   fontWeight: FontWeight.bold,
@@ -76,34 +79,16 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: () {
                         if (_formKey.currentState?.validate() ?? false) {
                           _formKey.currentState?.save();
+                          // Logique pour gérer l'inscription
                         }
                       },
-                      child: Text('Se connecter',
-                          style: TextStyle(color: Colors.white)),
+                      child: Text("S'inscrire",
+                          style: TextStyle(
+                              color:
+                                  Colors.white)), // Correction du guillemet ici
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color(0xFFDB592A),
                         fixedSize: Size(327, 56),
-                      ),
-                    ),
-                    SizedBox(height: 20.0),
-                    RichText(
-                      text: TextSpan(
-                        text: "Vous n'avez pas de compte ? ",
-                        style: TextStyle(color: Color(0xFF9C9BC2)),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: "S'inscrire",
-                            style: TextStyle(color: Color(0xFFFC6630)),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => RegisterPage()),
-                                );
-                              },
-                          ),
-                        ],
                       ),
                     ),
                     SizedBox(height: 20.0),

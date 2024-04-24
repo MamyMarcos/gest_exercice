@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/gestures.dart'; // Import nécessaire pour TapGestureRecognizer
+import 'package:flutter/gestures.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -8,8 +8,8 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
-  String? _email; // Declare as nullable
-  String? _password; // Declare as nullable
+  String? _email;
+  String? _password;
 
   @override
   Widget build(BuildContext context) {
@@ -35,12 +35,11 @@ class _LoginPageState extends State<LoginPage> {
                     TextFormField(
                       decoration: InputDecoration(
                         labelText: 'Adresse e-mail',
-                        fillColor: Color(0xFFF3F6FB), // Couleur de fond
-                        filled: true, // Activez le remplissage de couleur
+                        fillColor: Color(0xFFF3F6FB),
+                        filled: true,
                         border: OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.circular(16.0), // Bordure arrondie
-                          borderSide: BorderSide.none, // Pas de bordure visible
+                          borderRadius: BorderRadius.circular(16.0),
+                          borderSide: BorderSide.none,
                         ),
                       ),
                       validator: (value) {
@@ -55,12 +54,11 @@ class _LoginPageState extends State<LoginPage> {
                     TextFormField(
                       decoration: InputDecoration(
                         labelText: 'Mot de passe',
-                        fillColor: Color(0xFFF3F6FB), // Couleur de fond
+                        fillColor: Color(0xFFF3F6FB),
                         filled: true,
                         border: OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.circular(16.0), // Bordure arrondie
-                          borderSide: BorderSide.none, // Pas de bordure visible
+                          borderRadius: BorderRadius.circular(16.0),
+                          borderSide: BorderSide.none,
                         ),
                       ),
                       obscureText: true,
@@ -82,11 +80,11 @@ class _LoginPageState extends State<LoginPage> {
                       },
                       child: Text(
                         'Se connecter',
-                        style: TextStyle(color: Colors.white), // Text color
+                        style: TextStyle(color: Colors.white),
                       ),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFFDB592A), // Background color
-                        fixedSize: Size(327, 56), // Fixed size
+                        backgroundColor: Color(0xFFDB592A),
+                        fixedSize: Size(327, 56),
                       ),
                     ),
                     SizedBox(height: 20.0),
@@ -98,10 +96,7 @@ class _LoginPageState extends State<LoginPage> {
                           TextSpan(
                             text: "S'inscrire",
                             style: TextStyle(color: Color(0xFFFC6630)),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                // Ajouter la navigation vers la page d'inscription
-                              },
+                            recognizer: TapGestureRecognizer()..onTap = () {},
                           ),
                         ],
                       ),

@@ -39,35 +39,35 @@ class HomePage extends StatelessWidget {
                 padding: const EdgeInsets.all(16.0),
                 child: Row(
                   children: [
+                    // Placez d'abord l'image à gauche
+                    Image.asset(
+                      'assets/images/exercise.png', // Assurez-vous que l'image est dans le bon chemin
+                      height: 120,
+                      fit: BoxFit.cover,
+                    ),
+                    SizedBox(width: 16), // Ajoutez un peu d'espace entre l'image et le texte
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: const [
                         Text(
-                          'Fixez vos objectifs de mise en forme',
+                          'Fixez vos objectifs',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 18,
                           ),
                         ),
-                        SizedBox(height: 8),
+                        SizedBox(height: 16),
                         ElevatedButton(
                           onPressed: null,
-                          
                           child: Text('Start Exercise'),
                         ),
                       ],
-                    ),
-                    Spacer(),
-                    Image.asset(
-                      'assets/images/exercise.png', // Assurez-vous que l'image est dans le bon chemin
-                      height: 80,
-                      fit: BoxFit.cover,
                     ),
                   ],
                 ),
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 12),
             const Text(
               'Mes exercices',
               style: TextStyle(

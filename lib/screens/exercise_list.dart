@@ -40,54 +40,98 @@ class _ExerciseListPageState extends State<ExerciseListPage> {
           ),
         ],
       ),
-      body: FutureBuilder<List<dynamic>>(
-        future: _exercises,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text('No exercises found'));
-          } else {
-            return SingleChildScrollView(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 12),
-                  const Text(
-                    'Mes exercices',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF001233),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Card(
+              color: const Color(0xFFFF5500),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16.0),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  children: [
+                    Image.asset(
+                      'assets/images/exercise.png',
+                      height: 120,
+                      fit: BoxFit.cover,
                     ),
-                  ),
-                  const SizedBox(height: 16),
-                  ListView.builder(
-                    physics: NeverScrollableScrollPhysics(),
+                    const SizedBox(width: 16),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: const [
+                        Text(
+                          'Fixez vos objectifs',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                          ),
+                        ),
+                        SizedBox(height: 16),
+                        ElevatedButton(
+                          onPressed: null,
+                          child: Text('Start Exercise'),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 12),
+            const Text(
+              'Mes exercices',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF001233),
+              ),
+            ),
+            const SizedBox(height: 16),
+            FutureBuilder<List<dynamic>>(
+              future: _exercises,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return const Center(child: Text('No exercises found'));
+                } else {
+                  return ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: snapshot.data!.length,
                     itemBuilder: (context, index) {
                       final exercise = snapshot.data![index];
                       return ExerciseTile(
-                        title: exercise['name'],
+                        title: exercise['name'] ?? 'No Name',
                         exercises: exercise['exercises'] ?? 0,
                         minutes: exercise['minutes'] ?? 0,
-                        imagePath:
-                            'assets/images/exercise.png', // Utilisez une image par défaut pour tous les exercices
+                        imagePath: 'assets/images/exercise.png',
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ExerciseDetailPage(
+                                  exerciseId: exercise['id']),
+                            ),
+                          );
+                        },
                       );
                     },
-                  ),
-                ],
-              ),
-            );
-          }
-        },
+                  );
+                }
+              },
+            ),
+          ],
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Color(0xFFFF5500),
+        backgroundColor: const Color(0xFFFF5500),
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home, color: Colors.white),

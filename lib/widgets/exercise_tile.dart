@@ -5,12 +5,14 @@ class ExerciseTile extends StatelessWidget {
   final int exercises;
   final int minutes;
   final String imagePath;
+  final VoidCallback onTap;
 
   const ExerciseTile({
     required this.title,
     required this.exercises,
     required this.minutes,
     required this.imagePath,
+    required this.onTap,
   });
 
   @override
@@ -22,7 +24,7 @@ class ExerciseTile extends StatelessWidget {
       child: ListTile(
         contentPadding: const EdgeInsets.all(16.0),
         leading: Image.asset(
-          imagePath, // Assurez-vous que l'image est dans le bon chemin
+          imagePath,
           height: 50,
           fit: BoxFit.cover,
         ),
@@ -42,9 +44,7 @@ class ExerciseTile extends StatelessWidget {
           ),
         ),
         trailing: const Icon(Icons.arrow_forward_ios, color: Color(0xFF001233)),
-        onTap: () {
-          // Action lorsque l'élément est tapé
-        },
+        onTap: onTap,
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import '../services/api_service.dart';
 import 'register_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -11,6 +12,33 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   String? _email;
   String? _password;
+  bool _isLoading = false;
+
+  void _login() async {
+    if (_formKey.currentState?.validate() ?? false) {
+      _formKey.currentState?.save();
+      setState(() {
+        _isLoading = true;
+      });
+
+      try {
+        final response = await ApiService.login(_email!, _password!);
+        // Gérer la réponse de l'API
+        print('Login successful: $response');
+        // Naviguer vers la page d'accueil ou autre page
+      } catch (error) {
+        print('Login failed: $error');
+        // Afficher un message d'erreur
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to login: $error')),
+        );
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,14 +103,14 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     SizedBox(height: 16.0),
                     ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState?.validate() ?? false) {
-                          _formKey.currentState?.save();
-                          // Logique pour gérer la connexion
-                        }
-                      },
-                      child: Text('Se connecter',
-                          style: TextStyle(color: Colors.white)),
+                      onPressed: _isLoading ? null : _login,
+                      child: _isLoading
+                          ? CircularProgressIndicator(
+                              valueColor:
+                                  AlwaysStoppedAnimation<Color>(Colors.white),
+                            )
+                          : Text('Se connecter',
+                              style: TextStyle(color: Colors.white)),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color(0xFFff5500),
                         fixedSize: Size(327, 56),
@@ -120,7 +148,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           TextSpan(
                             text: "Hub",
-                            style: TextStyle(color: Color(0xFF001233)),
+                            style: TextStyle(color: Color(0xFFff5500)),
                           ),
                         ],
                       ),

@@ -1,7 +1,6 @@
-// ignore_for_file: library_private_types_in_public_api
-
 import 'package:flutter/material.dart';
-import 'package:gestion_exercice/widgets/arrow_back_widget.dart';
+import '../services/api_service.dart';
+import '../widgets/arrow_back_widget.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -12,6 +11,33 @@ class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
   String? _email;
   String? _password;
+  bool _isLoading = false;
+
+  void _register() async {
+    if (_formKey.currentState?.validate() ?? false) {
+      _formKey.currentState?.save();
+      setState(() {
+        _isLoading = true;
+      });
+
+      try {
+        final response = await ApiService.register(_email!, _password!);
+        // Gérer la réponse de l'API
+        print('Registration successful: $response');
+        // Naviguer vers la page de connexion ou d'accueil
+      } catch (error) {
+        print('Registration failed: $error');
+        // Afficher un message d'erreur
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to register: $error')),
+        );
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,13 +107,14 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     const SizedBox(height: 16.0),
                     ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState?.validate() ?? false) {
-                          _formKey.currentState?.save();
-                        }
-                      },
-                      child: const Text("S'inscrire",
-                          style: TextStyle(color: Colors.white)),
+                      onPressed: _isLoading ? null : _register,
+                      child: _isLoading
+                          ? CircularProgressIndicator(
+                              valueColor:
+                                  AlwaysStoppedAnimation<Color>(Colors.white),
+                            )
+                          : const Text("S'inscrire",
+                              style: TextStyle(color: Colors.white)),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color(0xFFff5500),
                         fixedSize: Size(327, 56),

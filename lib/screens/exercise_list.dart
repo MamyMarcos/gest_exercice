@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'exercise_detail.dart';
 import '../widgets/exercise_tile.dart';
 import '../services/api_service.dart';
+import '../models/exercise_model.dart';
 
 class ExerciseListPage extends StatefulWidget {
   const ExerciseListPage({super.key});
@@ -11,7 +12,7 @@ class ExerciseListPage extends StatefulWidget {
 }
 
 class _ExerciseListPageState extends State<ExerciseListPage> {
-  late Future<List<dynamic>> _exercises;
+  late Future<List<Exercise>> _exercises;
 
   @override
   void initState() {
@@ -91,7 +92,7 @@ class _ExerciseListPageState extends State<ExerciseListPage> {
               ),
             ),
             const SizedBox(height: 16),
-            FutureBuilder<List<dynamic>>(
+            FutureBuilder<List<Exercise>>(
               future: _exercises,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
@@ -108,16 +109,16 @@ class _ExerciseListPageState extends State<ExerciseListPage> {
                     itemBuilder: (context, index) {
                       final exercise = snapshot.data![index];
                       return ExerciseTile(
-                        title: exercise['name'] ?? 'No Name',
-                        exercises: exercise['exercises'] ?? 0,
-                        minutes: exercise['minutes'] ?? 0,
+                        title: exercise.name,
+                        exercises: 0,
+                        minutes: exercise.durationRecommended,
                         imagePath: 'assets/images/exercise.png',
                         onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => ExerciseDetailPage(
-                                  exerciseId: exercise['id']),
+                              builder: (context) =>
+                                  ExerciseDetailPage(exerciseId: exercise.id),
                             ),
                           );
                         },

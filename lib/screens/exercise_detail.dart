@@ -123,9 +123,9 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  SizedBox(height: 32.0),
-                  SvgPicture.asset(
-                    'detail-exercise.svg',
+                  SizedBox(height: 12.0),
+                  Image.asset(
+                    'assets/images/ex1.png',
                     height: 200,
                   ),
                   SizedBox(height: 32.0),

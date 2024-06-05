@@ -125,7 +125,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
                   ),
                   SizedBox(height: 32.0),
                   SvgPicture.asset(
-                    'assets/detail-exercise.svg',
+                    'assets/ex1.png',
                     height: 200,
                   ),
                   SizedBox(height: 32.0),

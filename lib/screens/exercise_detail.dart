@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../services/api_service.dart';
+import '../models/exercise_model.dart';
 
 class ExerciseDetailPage extends StatefulWidget {
   final int exerciseId;
@@ -13,7 +14,7 @@ class ExerciseDetailPage extends StatefulWidget {
 }
 
 class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
-  late Future<Map<String, dynamic>> _exerciseDetail;
+  late Future<Exercise> _exerciseDetail;
   Timer? _timer;
   int _seconds = 0;
   bool _isRunning = false;
@@ -24,8 +25,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
     _exerciseDetail = ApiService.getExerciseDetail(widget.exerciseId);
     _exerciseDetail.then((exercise) {
       setState(() {
-        _seconds = exercise['durationRecommended'] *
-            60; // Convertir les minutes en secondes
+        _seconds = exercise.durationRecommended * 60;
       });
     });
   }
@@ -71,7 +71,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
         title: Text('Exercise Detail'),
         backgroundColor: Color(0xFF001233),
       ),
-      body: FutureBuilder<Map<String, dynamic>>(
+      body: FutureBuilder<Exercise>(
         future: _exerciseDetail,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -88,7 +88,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    exercise['name'],
+                    exercise.name,
                     style: TextStyle(
                       fontSize: 24.0,
                       fontWeight: FontWeight.bold,
@@ -98,7 +98,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
                   ),
                   SizedBox(height: 16.0),
                   Text(
-                    exercise['description'],
+                    exercise.description,
                     style: TextStyle(
                       fontSize: 16.0,
                       color: Color(0xFF001233),
@@ -107,7 +107,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
                   ),
                   SizedBox(height: 16.0),
                   Text(
-                    'Type: ${exercise['type']}',
+                    'Type: ${exercise.type}',
                     style: TextStyle(
                       fontSize: 16.0,
                       color: Color(0xFF001233),
@@ -116,7 +116,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
                   ),
                   SizedBox(height: 16.0),
                   Text(
-                    'Recommended Duration: ${exercise['durationRecommended']} minutes',
+                    'Recommended Duration: ${exercise.durationRecommended} minutes',
                     style: TextStyle(
                       fontSize: 16.0,
                       color: Color(0xFF001233),
@@ -125,14 +125,14 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
                   ),
                   SizedBox(height: 32.0),
                   SvgPicture.asset(
-                    'detail-exercise.svg',
+                    'assets/detail-exercise.svg',
                     height: 200,
                   ),
                   SizedBox(height: 32.0),
                   Text(
                     'Timer: ${_formatTime(_seconds)}',
                     style: TextStyle(
-                      fontSize: 32.0, // Taille du texte du compteur augmentée
+                      fontSize: 32.0,
                       fontWeight: FontWeight.bold,
                       color: Color(0xFF001233),
                     ),

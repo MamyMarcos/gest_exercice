@@ -3,6 +3,8 @@ import 'exercise_detail.dart';
 import '../services/api_service.dart';
 
 class ExerciseListPage extends StatefulWidget {
+  const ExerciseListPage({super.key});
+
   @override
   _ExerciseListPageState createState() => _ExerciseListPageState();
 }
@@ -20,18 +22,18 @@ class _ExerciseListPageState extends State<ExerciseListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Exercises'),
-        backgroundColor: Color(0xFF001233),
+        title: const Text('Exercises'),
+        backgroundColor: const Color(0xFF001233),
       ),
       body: FutureBuilder<List<dynamic>>(
         future: _exercises,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(child: Text('No exercises found'));
+            return const Center(child: Text('No exercises found'));
           } else {
             return ListView.builder(
               itemCount: snapshot.data!.length,

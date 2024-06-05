@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../services/api_service.dart';
 
 class ExerciseDetailPage extends StatefulWidget {
@@ -12,11 +14,54 @@ class ExerciseDetailPage extends StatefulWidget {
 
 class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
   late Future<Map<String, dynamic>> _exerciseDetail;
+  Timer? _timer;
+  int _seconds = 0;
+  bool _isRunning = false;
 
   @override
   void initState() {
     super.initState();
     _exerciseDetail = ApiService.getExerciseDetail(widget.exerciseId);
+    _exerciseDetail.then((exercise) {
+      setState(() {
+        _seconds = exercise['durationRecommended'] *
+            60; // Convertir les minutes en secondes
+      });
+    });
+  }
+
+  void _startTimer() {
+    if (_isRunning || _seconds <= 0) return;
+
+    setState(() {
+      _isRunning = true;
+    });
+
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      setState(() {
+        if (_seconds > 0) {
+          _seconds--;
+        } else {
+          _timer?.cancel();
+          _isRunning = false;
+        }
+      });
+    });
+  }
+
+  void _pauseTimer() {
+    if (!_isRunning) return;
+
+    _timer?.cancel();
+    setState(() {
+      _isRunning = false;
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
   }
 
   @override
@@ -40,7 +85,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
             return Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
                     exercise['name'],
@@ -49,6 +94,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
                       fontWeight: FontWeight.bold,
                       color: Color(0xFF001233),
                     ),
+                    textAlign: TextAlign.center,
                   ),
                   SizedBox(height: 16.0),
                   Text(
@@ -57,6 +103,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
                       fontSize: 16.0,
                       color: Color(0xFF001233),
                     ),
+                    textAlign: TextAlign.center,
                   ),
                   SizedBox(height: 16.0),
                   Text(
@@ -65,6 +112,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
                       fontSize: 16.0,
                       color: Color(0xFF001233),
                     ),
+                    textAlign: TextAlign.center,
                   ),
                   SizedBox(height: 16.0),
                   Text(
@@ -73,6 +121,45 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
                       fontSize: 16.0,
                       color: Color(0xFF001233),
                     ),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 32.0),
+                  SvgPicture.asset(
+                    'detail-exercise.svg',
+                    height: 200,
+                  ),
+                  SizedBox(height: 32.0),
+                  Text(
+                    'Timer: ${_formatTime(_seconds)}',
+                    style: TextStyle(
+                      fontSize: 32.0, // Taille du texte du compteur augmentée
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF001233),
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 32.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                        onPressed: _startTimer,
+                        child: Text('Start',
+                            style: TextStyle(color: Colors.white)),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color(0xFFff5500),
+                        ),
+                      ),
+                      SizedBox(width: 16.0),
+                      ElevatedButton(
+                        onPressed: _pauseTimer,
+                        child: Text('Pause',
+                            style: TextStyle(color: Colors.white)),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color(0xFFff5500),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -81,5 +168,12 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
         },
       ),
     );
+  }
+
+  String _formatTime(int seconds) {
+    final duration = Duration(seconds: seconds);
+    final minutes = duration.inMinutes;
+    final remainingSeconds = seconds % 60;
+    return '$minutes:${remainingSeconds.toString().padLeft(2, '0')}';
   }
 }

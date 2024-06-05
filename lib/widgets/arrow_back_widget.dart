@@ -10,7 +10,7 @@ class ArrowBack extends StatelessWidget {
       onTap: () {
         Navigator.of(context).pop();
       },
-      child: Container(
+      child: SizedBox(
         width: 48,
         height: 48,
         child: SvgPicture.asset(

@@ -3,6 +3,8 @@ import '../services/api_service.dart';
 import '../widgets/arrow_back_widget.dart';
 
 class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
+
   @override
   _RegisterPageState createState() => _RegisterPageState();
 }
@@ -42,11 +44,11 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFefe0ca),
+      backgroundColor: const Color(0xFFefe0ca),
       appBar: AppBar(
-        leading: ArrowBack(),
+        leading: const ArrowBack(),
         elevation: 0,
-        backgroundColor: Color(0xFFefe0ca),
+        backgroundColor: const Color(0xFFefe0ca),
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -70,7 +72,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     TextFormField(
                       decoration: InputDecoration(
                         labelText: 'Adresse e-mail',
-                        fillColor: Color(0xFFF3F6FB),
+                        fillColor: const Color(0xFFF3F6FB),
                         filled: true,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(16.0),
@@ -108,17 +110,17 @@ class _RegisterPageState extends State<RegisterPage> {
                     const SizedBox(height: 16.0),
                     ElevatedButton(
                       onPressed: _isLoading ? null : _register,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFFff5500),
+                        fixedSize: const Size(327, 56),
+                      ),
                       child: _isLoading
-                          ? CircularProgressIndicator(
+                          ? const CircularProgressIndicator(
                               valueColor:
                                   AlwaysStoppedAnimation<Color>(Colors.white),
                             )
                           : const Text("S'inscrire",
                               style: TextStyle(color: Colors.white)),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFFff5500),
-                        fixedSize: Size(327, 56),
-                      ),
                     ),
                     const SizedBox(height: 20.0),
                     RichText(

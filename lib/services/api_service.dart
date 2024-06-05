@@ -44,4 +44,26 @@ class ApiService {
       throw Exception('Failed to register');
     }
   }
+
+  static Future<Map<String, dynamic>> getExerciseDetail(int id) async {
+    final url = Uri.parse('$baseUrl/exercises/$id');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      throw Exception('Failed to load exercise detail');
+    }
+  }
+
+  static Future<List<dynamic>> getExercises() async {
+    final url = Uri.parse('$baseUrl/exercises');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      throw Exception('Failed to load exercises');
+    }
+  }
 }

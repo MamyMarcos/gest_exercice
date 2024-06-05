@@ -15,6 +15,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFefe0ca),
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(32.0),
@@ -26,6 +27,7 @@ class _LoginPageState extends State<LoginPage> {
                 style: TextStyle(
                   fontSize: 24.0,
                   fontWeight: FontWeight.bold,
+                  color: Color(0xFF001233),
                 ),
               ),
               SizedBox(height: 32.0),
@@ -76,12 +78,13 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: () {
                         if (_formKey.currentState?.validate() ?? false) {
                           _formKey.currentState?.save();
+                          // Logique pour gérer la connexion
                         }
                       },
                       child: Text('Se connecter',
                           style: TextStyle(color: Colors.white)),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFFDB592A),
+                        backgroundColor: Color(0xFFff5500),
                         fixedSize: Size(327, 56),
                       ),
                     ),
@@ -93,7 +96,7 @@ class _LoginPageState extends State<LoginPage> {
                         children: <TextSpan>[
                           TextSpan(
                             text: "S'inscrire",
-                            style: TextStyle(color: Color(0xFFFC6630)),
+                            style: TextStyle(color: Color(0xFFff5500)),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
                                 Navigator.push(
@@ -113,11 +116,11 @@ class _LoginPageState extends State<LoginPage> {
                         children: <TextSpan>[
                           TextSpan(
                             text: "Gym",
-                            style: TextStyle(color: Colors.black),
+                            style: TextStyle(color: Color(0xFF001233)),
                           ),
                           TextSpan(
                             text: "Hub",
-                            style: TextStyle(color: Color(0xFFFC6630)),
+                            style: TextStyle(color: Color(0xFF001233)),
                           ),
                         ],
                       ),

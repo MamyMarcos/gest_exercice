@@ -16,9 +16,11 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFefe0ca),
       appBar: AppBar(
         leading: ArrowBack(),
         elevation: 0,
+        backgroundColor: Color(0xFFefe0ca),
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -31,6 +33,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 style: TextStyle(
                   fontSize: 24.0,
                   fontWeight: FontWeight.bold,
+                  color: Color(0xFF001233),
                 ),
               ),
               const SizedBox(height: 32.0),
@@ -81,13 +84,12 @@ class _RegisterPageState extends State<RegisterPage> {
                       onPressed: () {
                         if (_formKey.currentState?.validate() ?? false) {
                           _formKey.currentState?.save();
-                          // Logique pour gérer l'inscription
                         }
                       },
                       child: const Text("S'inscrire",
                           style: TextStyle(color: Colors.white)),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFFDB592A),
+                        backgroundColor: Color(0xFFff5500),
                         fixedSize: Size(327, 56),
                       ),
                     ),
@@ -98,11 +100,11 @@ class _RegisterPageState extends State<RegisterPage> {
                         children: <TextSpan>[
                           TextSpan(
                             text: "Gym",
-                            style: TextStyle(color: Colors.black),
+                            style: TextStyle(color: Color(0xFF001233)),
                           ),
                           TextSpan(
                             text: "Hub",
-                            style: TextStyle(color: Color(0xFFFC6630)),
+                            style: TextStyle(color: Color(0xFF001233)),
                           ),
                         ],
                       ),

@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import '../services/api_service.dart';
 import 'register_page.dart';
+import 'exercise_list.dart'; // Importez la page de la liste des exercices
 
 class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -25,7 +28,11 @@ class _LoginPageState extends State<LoginPage> {
         final response = await ApiService.login(_email!, _password!);
         // Gérer la réponse de l'API
         print('Login successful: $response');
-        // Naviguer vers la page d'accueil ou autre page
+        // Naviguer vers la page de la liste des exercices
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const ExerciseListPage()),
+        );
       } catch (error) {
         print('Login failed: $error');
         // Afficher un message d'erreur
@@ -43,14 +50,14 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFefe0ca),
+      backgroundColor: const Color(0xFFefe0ca),
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(32.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(
+              const Text(
                 'Se connecter',
                 style: TextStyle(
                   fontSize: 24.0,
@@ -58,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
                   color: Color(0xFF001233),
                 ),
               ),
-              SizedBox(height: 32.0),
+              const SizedBox(height: 32.0),
               Form(
                 key: _formKey,
                 child: Column(
@@ -66,7 +73,7 @@ class _LoginPageState extends State<LoginPage> {
                     TextFormField(
                       decoration: InputDecoration(
                         labelText: 'Adresse e-mail',
-                        fillColor: Color(0xFFF3F6FB),
+                        fillColor: const Color(0xFFF3F6FB),
                         filled: true,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(16.0),
@@ -81,11 +88,11 @@ class _LoginPageState extends State<LoginPage> {
                       },
                       onSaved: (value) => _email = value!,
                     ),
-                    SizedBox(height: 16.0),
+                    const SizedBox(height: 16.0),
                     TextFormField(
                       decoration: InputDecoration(
                         labelText: 'Mot de passe',
-                        fillColor: Color(0xFFF3F6FB),
+                        fillColor: const Color(0xFFF3F6FB),
                         filled: true,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(16.0),
@@ -101,45 +108,45 @@ class _LoginPageState extends State<LoginPage> {
                       },
                       onSaved: (value) => _password = value!,
                     ),
-                    SizedBox(height: 16.0),
+                    const SizedBox(height: 16.0),
                     ElevatedButton(
                       onPressed: _isLoading ? null : _login,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFFff5500),
+                        fixedSize: const Size(327, 56),
+                      ),
                       child: _isLoading
-                          ? CircularProgressIndicator(
+                          ? const CircularProgressIndicator(
                               valueColor:
                                   AlwaysStoppedAnimation<Color>(Colors.white),
                             )
-                          : Text('Se connecter',
+                          : const Text('Se connecter',
                               style: TextStyle(color: Colors.white)),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFFff5500),
-                        fixedSize: Size(327, 56),
-                      ),
                     ),
-                    SizedBox(height: 20.0),
+                    const SizedBox(height: 20.0),
                     RichText(
                       text: TextSpan(
                         text: "Vous n'avez pas de compte ? ",
-                        style: TextStyle(color: Color(0xFF9C9BC2)),
+                        style: const TextStyle(color: Color(0xFF9C9BC2)),
                         children: <TextSpan>[
                           TextSpan(
                             text: "S'inscrire",
-                            style: TextStyle(color: Color(0xFFff5500)),
+                            style: const TextStyle(color: Color(0xFFff5500)),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => RegisterPage()),
+                                      builder: (context) => const RegisterPage()),
                                 );
                               },
                           ),
                         ],
                       ),
                     ),
-                    SizedBox(height: 20.0),
+                    const SizedBox(height: 20.0),
                     RichText(
-                      text: TextSpan(
+                      text: const TextSpan(
                         style: TextStyle(fontSize: 40.0),
                         children: <TextSpan>[
                           TextSpan(

@@ -7,7 +7,7 @@ import '../models/login_response_model.dart';
 
 class ApiService {
   static Future<LoginResponse> login(String email, String password) async {
-    final url = Uri.parse('$baseUrl/users/login');
+    final url = Uri.parse(loginUrl);
     final response = await http.post(
       url,
       headers: {
@@ -24,7 +24,7 @@ class ApiService {
   }
 
   static Future<LoginResponse> register(String email, String password) async {
-    final url = Uri.parse('$baseUrl/users');
+    final url = Uri.parse(registerUrl);
     final response = await http.post(
       url,
       headers: {
@@ -41,7 +41,7 @@ class ApiService {
   }
 
   static Future<Exercise> getExerciseDetail(int id) async {
-    final url = Uri.parse('$baseUrl/exercises/$id');
+    final url = Uri.parse('$exerciseDetailUrl/$id');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -52,7 +52,7 @@ class ApiService {
   }
 
   static Future<List<Exercise>> getExercises() async {
-    final url = Uri.parse('$baseUrl/exercises');
+    final url = Uri.parse(exercisesUrl);
     final response = await http.get(url);
 
     if (response.statusCode == 200) {

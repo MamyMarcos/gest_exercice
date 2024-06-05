@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import '../services/api_service.dart';
 import 'register_page.dart';
+import 'exercise_list.dart'; // Importez la page de la liste des exercices
 
 class LoginPage extends StatefulWidget {
   @override
@@ -25,7 +26,11 @@ class _LoginPageState extends State<LoginPage> {
         final response = await ApiService.login(_email!, _password!);
         // Gérer la réponse de l'API
         print('Login successful: $response');
-        // Naviguer vers la page d'accueil ou autre page
+        // Naviguer vers la page de la liste des exercices
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => ExerciseListPage()),
+        );
       } catch (error) {
         print('Login failed: $error');
         // Afficher un message d'erreur

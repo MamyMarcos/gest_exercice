@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import '../services/api_service.dart';
 import 'register_page.dart';
-import 'exercise_list.dart'; // Importez la page de la liste des exercices
+import 'exercise_list.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -137,7 +137,8 @@ class _LoginPageState extends State<LoginPage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => const RegisterPage()),
+                                      builder: (context) =>
+                                          const RegisterPage()),
                                 );
                               },
                           ),
